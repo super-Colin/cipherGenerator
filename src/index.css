@@ -9,6 +9,11 @@
   margin: 0.5em;
 }
 
+.caesarCipher_options-adjustments {
+  display: flex;
+  justify-content: space-around;
+}
+
 body, html {
   box-sizing: border-box;
   padding: 0;

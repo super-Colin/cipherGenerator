@@ -24,18 +24,18 @@ import React, { useState } from 'react';
 const CaesarCipherForm = () => {
 
   const [caesarCipherState, setCaesarCipherState] = useState({
+    // textToEncode: "Something that's been through cipher",
     textToEncode: '',
-    // encodedText: '',
     textToDecode: '',
-    // decodedText:'',
-    shiftOptions: {
-      leftOrRight: -1,
-      alphabet: "lowercase",
-      shiftAmount: 3
-    }
+    shiftOptions_encodeOrDecode: 1, // -1 = decode, 1 = encode
+    shiftOptions_leftOrRight: 1, //-1 =left, 1 = right
+    shiftOptions_alphabet: "lowercase",
+    shiftOptions_shiftAmount: 3,
+
   });
 
   const caesarCipherEncode = (textToEncode, shiftOptions) => {
+    // console.log(shiftOptions);
     const charCodeCutOff = 123; // end of alphabet and symbols in charCode
     // const slicePoint = 97; //begining of lowercase alphabet
     let encodedText = '';
@@ -57,26 +57,29 @@ const CaesarCipherForm = () => {
     textToEncodeArray.forEach( (character) => {
       let lowercase = '';
       if ( character === character.toLowerCase() ){ lowercase = true } else { lowercase = false }
-      
-      let charCode = character.toLowerCase().charCodeAt(0); 
-      // let shiftedCharCode = ( shiftOptions.shiftAmount + charCode) * shiftOptions.leftOrRight;
-      let shiftedCharCode = (shiftOptions.shiftAmount * shiftOptions.leftOrRight) + charCode;
-      let newCharCode = 0;
-      if( shiftedCharCode < slicePoint ){
-        newCharCode = charCodeCutOff - (shiftedCharCode - slicePoint);
-        console.log(`shiftedCharCode < slicePoint: ${charCode} new char code: ${newCharCode}`);
-      } else if(shiftedCharCode > charCodeCutOff){
-        newCharCode = slicePoint + (shiftedCharCode - charCodeCutOff);
-        console.log(`shiftedCharCode > charCodeCutOff: ${charCode} new char code: ${newCharCode}`);
-      }else{
-        newCharCode = shiftedCharCode;
-        console.log(`newCharCode = ${shiftedCharCode}`);
-      }
-      console.log(`input char code: ${charCode}, shifted code: ${shiftedCharCode}, new char code: ${newCharCode}`);
 
+      let charCode = character.toLowerCase().charCodeAt(0);
+      let newCharCode = 0;
+      if(charCode > charCodeCutOff || charCode < slicePoint){
+        newCharCode = charCode;
+      }else{
+        let amountToShift = (shiftOptions.shiftAmount * shiftOptions.leftOrRight * shiftOptions.encodeOrDecode );
+        // console.log(amountToShift);
+        let shiftedCharCode = amountToShift + charCode;
+        // console.log( (shiftOptions.shiftAmount * shiftOptions.leftOrRight * shiftOptions.encodeOrDecode ) )
+        
+        if( shiftedCharCode <= slicePoint ){
+          newCharCode = charCodeCutOff + (shiftedCharCode - slicePoint);
+          console.log(`shiftedCharCode < slicePoint: ${shiftedCharCode} < ${charCode} new char code: ${newCharCode}`);
+        } else if(shiftedCharCode > charCodeCutOff){
+          newCharCode = slicePoint + (shiftedCharCode - charCodeCutOff);
+          console.log(`shiftedCharCode > charCodeCutOff: ${slicePoint} + ${(shiftedCharCode - charCodeCutOff)} = ${newCharCode}`);
+        }else{
+          newCharCode = shiftedCharCode;
+        }
+      }
       let newChar = String.fromCharCode(newCharCode)
       if( ! lowercase ){newChar = newChar.toUpperCase();}
-
       encodedText += newChar;
       
     });
@@ -85,18 +88,46 @@ const CaesarCipherForm = () => {
 
   }
 
+  const getShiftOptionsJson = ()=>{
+    let shiftOptions = {
+      encodeOrDecode: caesarCipherState.shiftOptions_encodeOrDecode,
+      leftOrRight: caesarCipherState.shiftOptions_leftOrRight,
+      alphabet: caesarCipherState.shiftOptions_alphabet,
+      shiftAmount: caesarCipherState.shiftOptions_shiftAmount,
+    }
+    console.log('shiftOptions: ', shiftOptions);
+    return shiftOptions;
+  }
 
   const encodeTextAreaHandler = (e)=>{
-    // console.log(caesarCipherState.shiftOptions);
-    const decodedText = caesarCipherEncode(e.target.value, caesarCipherState.shiftOptions);
+    const shiftOptions = getShiftOptionsJson();
+    const encodedText = caesarCipherEncode(e.target.value, shiftOptions);
+
     setCaesarCipherState({
       ...caesarCipherState,
       textToEncode: e.target.value,
-      textToDecode: decodedText
+      textToDecode: encodedText
     });
   }
   const decodeTextAreaHandler = (e)=>{
-    setCaesarCipherState({ ...caesarCipherState,textToDecode: e.target.value});
+    const shiftOptions = getShiftOptionsJson();
+    const decodedText = caesarCipherEncode(e.target.value, shiftOptions);
+
+    setCaesarCipherState({
+      ...caesarCipherState,
+      textToEncode: decodedText,
+      textToDecode: e.target.value
+    });
+  }
+
+  const checkboxHandler = (e)=>{
+    if(e.target.name =="left"){
+      setCaesarCipherState({
+        ...caesarCipherState,
+        shiftOptions_leftOrRight: -1
+      })
+    }
+    setCaesarCipherState({...caesarCipherState, shiftOptions_leftOrRight: 1})
   }
 
   return (
@@ -104,9 +135,10 @@ const CaesarCipherForm = () => {
 
 
       <div className="encode">
-        <h3 className="caesarCipher_title" >Encode</h3>
+        <h1 className="caesarCipher_title" >Encode</h1>
         <textarea
           className="caesarCipher_textInput"
+          onFocus={()=>{setCaesarCipherState({...caesarCipherState, shiftOptions_encodeOrDecode:1})}}
           onChange={encodeTextAreaHandler}
           value={caesarCipherState.textToEncode} 
           maxLength="100" 
@@ -115,17 +147,65 @@ const CaesarCipherForm = () => {
 
       <div className="options">
         <hr />
-        <h3 className="caesarCipher_title" >Options</h3>
-        <button className="caesarCipher_button" >Encode</button>
-        <button className="caesarCipher_button" >Decode</button>
+        <h2 className="caesarCipher_title" >Options</h2>
+
+        <div className="caesarCipher_options-adjustments">
+          <div>
+            <h3>Shift Amount</h3>
+            <input
+              type="range"
+              min="1"
+              max="9" 
+              value={caesarCipherState.shiftOptions_shiftAmount}
+              onChange={ (e)=>{setCaesarCipherState({...caesarCipherState, shiftOptions_shiftAmount: e.target.value})} }
+            />
+            <br />
+            <span>{caesarCipherState.shiftOptions_shiftAmount}</span>
+          </div>
+
+        
+          <div >
+            <h3>Left or Right</h3>
+            <div>
+              <input 
+              type="checkbox" 
+              value="left" 
+              name="left" 
+              checked={ caesarCipherState.shiftOptions_leftOrRight - 1}
+              onChange={ ()=>{setCaesarCipherState({...caesarCipherState, shiftOptions_leftOrRight: -1})} }
+            />
+              <span>Left</span>
+            </div>
+            <div>
+              <input 
+              type="checkbox" 
+              value="right" 
+              name="right" 
+              checked={ caesarCipherState.shiftOptions_leftOrRight + 1}
+              onChange={ ()=>{setCaesarCipherState({...caesarCipherState, shiftOptions_leftOrRight: 1})} }
+            />
+              <span>Right</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p>Shift Amount: {caesarCipherState.shiftOptions_shiftAmount}</p>
+          <p> Left or Right: {caesarCipherState.shiftOptions_leftOrRight + 1 ? "Right" : "Left"}</p>
+          <p> Decode or Encode: {caesarCipherState.shiftOptions_encodeOrDecode + 1 ? "Encode" : "Decode"}</p>
+        </div>
+        
+        
         <hr />
       </div>
 
 
       <div className="decode">
-        <h3 className="caesarCipher_title" >Decode</h3>
+        <h1 className="caesarCipher_title" >Decode</h1>
         <textarea
           className="caesarCipher_textInput"
+          
+          onFocus={()=>{setCaesarCipherState({...caesarCipherState, shiftOptions_encodeOrDecode:-1})}}
           onChange={decodeTextAreaHandler}
           value={caesarCipherState.textToDecode}
           maxLength="100"
