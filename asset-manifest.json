@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/cipherGenerator/static/css/main.c54a1d1d.chunk.css",
+    "main.js": "/cipherGenerator/static/js/main.87bbdfbd.chunk.js",
+    "main.js.map": "/cipherGenerator/static/js/main.87bbdfbd.chunk.js.map",
+    "runtime-main.js": "/cipherGenerator/static/js/runtime-main.4f142432.js",
+    "runtime-main.js.map": "/cipherGenerator/static/js/runtime-main.4f142432.js.map",
+    "static/js/2.681d9b76.chunk.js": "/cipherGenerator/static/js/2.681d9b76.chunk.js",
+    "static/js/2.681d9b76.chunk.js.map": "/cipherGenerator/static/js/2.681d9b76.chunk.js.map",
+    "static/js/3.f6b391a7.chunk.js": "/cipherGenerator/static/js/3.f6b391a7.chunk.js",
+    "static/js/3.f6b391a7.chunk.js.map": "/cipherGenerator/static/js/3.f6b391a7.chunk.js.map",
+    "index.html": "/cipherGenerator/index.html",
+    "static/css/main.c54a1d1d.chunk.css.map": "/cipherGenerator/static/css/main.c54a1d1d.chunk.css.map",
+    "static/js/2.681d9b76.chunk.js.LICENSE.txt": "/cipherGenerator/static/js/2.681d9b76.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/cipherGenerator/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4f142432.js",
+    "static/js/2.681d9b76.chunk.js",
+    "static/css/main.c54a1d1d.chunk.css",
+    "static/js/main.87bbdfbd.chunk.js"
+  ]
+}
