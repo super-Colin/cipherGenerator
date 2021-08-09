@@ -60,7 +60,7 @@ const CaesarCipherForm = () => {
 
       let charCode = character.toLowerCase().charCodeAt(0);
       let newCharCode = 0;
-      if(charCode > charCodeCutOff || charCode < slicePoint){
+      if(charCode >= charCodeCutOff || charCode < slicePoint){
         newCharCode = charCode;
       }else{
         let amountToShift = (shiftOptions.shiftAmount * shiftOptions.leftOrRight * shiftOptions.encodeOrDecode );
@@ -69,9 +69,9 @@ const CaesarCipherForm = () => {
         // console.log( (shiftOptions.shiftAmount * shiftOptions.leftOrRight * shiftOptions.encodeOrDecode ) )
         
         if( shiftedCharCode <= slicePoint ){
-          newCharCode = charCodeCutOff + (shiftedCharCode - slicePoint);
+          newCharCode = (charCodeCutOff - 1) + (shiftedCharCode - slicePoint);
           console.log(`shiftedCharCode < slicePoint: ${shiftedCharCode} < ${charCode} new char code: ${newCharCode}`);
-        } else if(shiftedCharCode > charCodeCutOff){
+        } else if(shiftedCharCode >= charCodeCutOff){
           newCharCode = slicePoint + (shiftedCharCode - charCodeCutOff);
           console.log(`shiftedCharCode > charCodeCutOff: ${slicePoint} + ${(shiftedCharCode - charCodeCutOff)} = ${newCharCode}`);
         }else{
@@ -102,7 +102,6 @@ const CaesarCipherForm = () => {
   const encodeTextAreaHandler = (e)=>{
     const shiftOptions = getShiftOptionsJson();
     const encodedText = caesarCipherEncode(e.target.value, shiftOptions);
-
     setCaesarCipherState({
       ...caesarCipherState,
       textToEncode: e.target.value,
@@ -112,22 +111,11 @@ const CaesarCipherForm = () => {
   const decodeTextAreaHandler = (e)=>{
     const shiftOptions = getShiftOptionsJson();
     const decodedText = caesarCipherEncode(e.target.value, shiftOptions);
-
     setCaesarCipherState({
       ...caesarCipherState,
       textToEncode: decodedText,
       textToDecode: e.target.value
     });
-  }
-
-  const checkboxHandler = (e)=>{
-    if(e.target.name =="left"){
-      setCaesarCipherState({
-        ...caesarCipherState,
-        shiftOptions_leftOrRight: -1
-      })
-    }
-    setCaesarCipherState({...caesarCipherState, shiftOptions_leftOrRight: 1})
   }
 
   return (
