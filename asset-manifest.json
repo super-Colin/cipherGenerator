@@ -1,23 +1,20 @@
 {
   "files": {
     "main.css": "/cipherGenerator/static/css/main.c54a1d1d.chunk.css",
-    "main.js": "/cipherGenerator/static/js/main.9d941df6.chunk.js",
-    "main.js.map": "/cipherGenerator/static/js/main.9d941df6.chunk.js.map",
-    "runtime-main.js": "/cipherGenerator/static/js/runtime-main.1ac6fa3f.js",
-    "runtime-main.js.map": "/cipherGenerator/static/js/runtime-main.1ac6fa3f.js.map",
+    "main.js": "/cipherGenerator/static/js/main.c7fb4996.chunk.js",
+    "main.js.map": "/cipherGenerator/static/js/main.c7fb4996.chunk.js.map",
+    "runtime-main.js": "/cipherGenerator/static/js/runtime-main.2a898c36.js",
+    "runtime-main.js.map": "/cipherGenerator/static/js/runtime-main.2a898c36.js.map",
     "static/js/2.2eb35ea0.chunk.js": "/cipherGenerator/static/js/2.2eb35ea0.chunk.js",
     "static/js/2.2eb35ea0.chunk.js.map": "/cipherGenerator/static/js/2.2eb35ea0.chunk.js.map",
-    "static/js/3.56e22b58.chunk.js": "/cipherGenerator/static/js/3.56e22b58.chunk.js",
-    "static/js/3.56e22b58.chunk.js.map": "/cipherGenerator/static/js/3.56e22b58.chunk.js.map",
     "index.html": "/cipherGenerator/index.html",
     "static/css/main.c54a1d1d.chunk.css.map": "/cipherGenerator/static/css/main.c54a1d1d.chunk.css.map",
-    "static/js/2.2eb35ea0.chunk.js.LICENSE.txt": "/cipherGenerator/static/js/2.2eb35ea0.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/cipherGenerator/static/media/logo.6ce24c58.svg"
+    "static/js/2.2eb35ea0.chunk.js.LICENSE.txt": "/cipherGenerator/static/js/2.2eb35ea0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.1ac6fa3f.js",
+    "static/js/runtime-main.2a898c36.js",
     "static/js/2.2eb35ea0.chunk.js",
     "static/css/main.c54a1d1d.chunk.css",
-    "static/js/main.9d941df6.chunk.js"
+    "static/js/main.c7fb4996.chunk.js"
   ]
 }
