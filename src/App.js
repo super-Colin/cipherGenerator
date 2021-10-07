@@ -1,11 +1,17 @@
+import {Helmet} from 'react-helmet'
 import logo from './logo.svg';
 import './App.css';
+
 
 import CesaerCipherForm from './components/CesaerCipherForm/CesaerCipherForm';
 
 function App() {
   return (
     <div className="App">
+      <Helmet>
+        <title>Caesar Cipher</title>
+        <meta name="description" content="A simple caesar cipher" />
+      </Helmet>
       <CesaerCipherForm />
     </div>
   );
