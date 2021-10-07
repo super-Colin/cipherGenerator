@@ -1,5 +1,4 @@
 import {Helmet} from 'react-helmet'
-import logo from './logo.svg';
 import './App.css';
 
 
